@@ -1,4 +1,4 @@
-import taskModel from "../models/taskModel.js";
+import shiftModel from "../models/shiftModel.js";
 import userModel from "../models/userModel.js";
 import { createTransport } from 'nodemailer';
 import dotenv from "dotenv";
@@ -13,10 +13,10 @@ const sendMail = (email, subject, title, description) => {
     });
 
     var mailOptions = {
-        from: 'alok.yadav6000@gmail.com',
+        from: process.env.SUPPORT_EMAIL,
         to: email,
         subject: subject,
-        html:`<h1>Task added successfully</h1><h2>Title: ${title}</h2><h3>Description: ${description}</h3>`
+        html:`<h1>Shift added successfully</h1><h2>Title: ${title}</h2><h3>Description: ${description}</h3>`
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
@@ -27,15 +27,15 @@ const sendMail = (email, subject, title, description) => {
         }
     });
 }
-const addTask = async (req, res) => {
+const addShift = async (req, res) => {
     const { title, description } = req.body;
     const userId = req.user.id;
     const user = await userModel.find({_id: userId});
-    const newTask = new taskModel({ title, description, completed: false, userId })
-    newTask.save()
+    const newShift = new shiftModel({ title, description, completed: false, userId })
+    newShift.save()
         .then(() => {
-            sendMail(user[0].email, "Task Added", title, description)
-            return (res.status(200).json({ message: "Task added successfully" }))
+            sendMail(user[0].email, "Shift Added", title, description)
+            return (res.status(200).json({ message: "Shift added successfully" }))
         })
         .catch((error) => {
             return (
@@ -44,17 +44,17 @@ const addTask = async (req, res) => {
         }
         )
 }
-const removeTask = (req, res) => {
+const removeShift = (req, res) => {
     const { id } = req.body;
     console.log("id: ", id);
-    taskModel.findByIdAndDelete(id)
-        .then(() => res.status(200).json({ message: "Task deleted successfully" }))
+    shiftModel.findByIdAndDelete(id)
+        .then(() => res.status(200).json({ message: "Shift deleted successfully" }))
         .catch((error) => res.status(501).json({ message: error.message }))
 }
 
-const getTask = (req, res) => {
-    taskModel.find({ userId: req.user.id })
+const getShift = (req, res) => {
+    shiftModel.find({ userId: req.user.id })
         .then((data) => res.status(200).json(data))
         .catch((error) => res.status(501).json({ message: error.message }))
 }
-export { addTask, getTask,removeTask }
+export { addShift, getShift,removeShift }

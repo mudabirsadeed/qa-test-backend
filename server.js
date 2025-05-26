@@ -2,9 +2,11 @@ import express from "express"
 import mongoose from "mongoose"
 import cors from "cors"
 import dotenv from "dotenv"
+import swaggerUi from "swagger-ui-express";
+import swaggerSpec from "./swagger/swaggerConfig.js";
 
 import userRouter from "./routes/userRoute.js"
-import taskRouter from "./routes/taskRoute.js"
+import shiftRouter from "./routes/shiftRoute.js"
 import forgotPasswordRouter from "./routes/forgotPassword.js"
 
 //app config
@@ -30,8 +32,10 @@ mongoose.connect(process.env.MONGO_URI, {
 
 //api endpoints
 app.use("/api/user", userRouter)
-app.use("/api/task", taskRouter)
+app.use("/api/shift", shiftRouter)
 app.use("/api/forgotPassword", forgotPasswordRouter)
+// Swagger Docs
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 //listen
 app.listen(port, () => console.log(`Listening on localhost:${port}`))
