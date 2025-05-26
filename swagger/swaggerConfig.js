@@ -18,6 +18,20 @@ const options = {
         description: "Production server",
       },
     ],
+    tags: [
+      {
+        name: "User",
+        description: "User authentication and profile management",
+      },
+      {
+        name: "Password",
+        description: "Forgot and Reset Password endpoints",
+      },
+      {
+        name: "Shift",
+        description: "Shift scheduling and management",
+      },
+    ],
     components: {
       securitySchemes: {
         bearerAuth: {
@@ -27,13 +41,9 @@ const options = {
         },
       },
     },
-    security: [
-      {
-        bearerAuth: [],
-      },
-    ],
+    security: [{ bearerAuth: [] }],
   },
-  apis: ["./routes/*.js", "./models/*.js"], // auto-annotated files
+  apis: ["./routes/*.js", "./models/*.js"], // still uses annotations in your route files
 };
 
 const swaggerSpec = swaggerJsdoc(options);
