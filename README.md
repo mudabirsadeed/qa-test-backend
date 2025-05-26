@@ -52,9 +52,6 @@ PORT=8000
 JWT_SECRET=secret1234
 NODE_ENV=development
 ```
-
-> ⚠️ **Note**: If using Gmail, make sure you enable **App Passwords** for secure authentication.
-
 ---
 
 ### 4. Run the server
