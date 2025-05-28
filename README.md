@@ -84,3 +84,22 @@ Authorization: Bearer <token>
 ## 📄 License
 
 MIT
+
+## Cypress Frontend Tests
+
+## Prerequisites
+
+- Backend server running locally (on localhost:8000)
+
+## Installation
+
+```bash
+npm install cypress --save-dev
+```
+
+## Running tests
+
+```bash
+npx cypress run --spec "cypress/e2e/auth.cy.js"
+```
+
